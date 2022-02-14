@@ -39,10 +39,7 @@ app.MapGet("/", () => "Hello World!");
 
 // GET - item by ID
     app.MapGet("/todoitems/{id}", async (int id, TodoDb db) =>
-        await db.Todos.FindAsync(id)
-            is Todo todo
-            ? Ok(new TodoItemDTO(todo))
-            : NotFound());
+        await db.Todos.FindAsync(id) is Todo todo ? Ok(new TodoItemDTO(todo)) : NotFound());
 
 // POST - new item
     app.MapPost("/todoitems", async (TodoItemDTO todoItemDTO, TodoDb db) =>
@@ -65,7 +62,7 @@ app.MapGet("/", () => "Hello World!");
     {
         var todo = await db.Todos.FindAsync(id);
 
-        if (todo is null) return NotFound();
+        if (todo == null) return NotFound();
 
         todo.Description = todoItemDTO.Description;
         todo.Completed = todoItemDTO.Completed;
@@ -83,10 +80,10 @@ app.MapGet("/", () => "Hello World!");
         {
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
-            return Ok(new TodoItemDTO(todo));
+            return Ok();
         }
 
-        return NotFound();
+        return NoContent();
     });
 
 #endregion
