@@ -1,19 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using WebAPI.DTO;
 
-namespace WebClientR.Pages;
-
-public class IndexModel : PageModel
+namespace WebClientR.Pages
 {
-    private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(ILogger<IndexModel> logger)
+    public class IndexModel : PageModel
     {
-        _logger = logger;
-    }
+        private readonly ILogger<IndexModel> _logger;
+        public List<TodoItemDTO> _items = new ();
+        private HttpClient _http = new ();
 
-    public void OnGet()
-    {
+        public IndexModel(ILogger<IndexModel> logger)
+        {
+            _logger = logger;
+        }
+
+        public async void OnGet()
+        {
+            _items = await _http.GetFromJsonAsync<List<TodoItemDTO>>($"https://127.0.0.1:7237/todoitems");
+        }
     }
 }

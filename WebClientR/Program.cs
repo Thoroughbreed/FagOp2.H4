@@ -1,3 +1,5 @@
+using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -5,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped(_ => new HttpClient {
+    BaseAddress = new Uri("https://127.0.0.1:7237")});
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
