@@ -17,29 +17,19 @@ namespace WebClientR.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly ITodoService _service;
-        private HttpClient _http;
 
         [BindProperty(SupportsGet = true)] public List<TodoItemDTO> Items { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, ITodoService service)
         {
             _service = service;
-            HttpClientHandler clientHandler = new();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
             _logger = logger;
-            _http = new HttpClient(clientHandler);
         }
 
-        private async Task GetItems()
-        {
-            Items = new();
-            var items = await _http.GetFromJsonAsync<List<TodoItemDTO>>($"https://127.0.0.1:7237/todoitems");
-            Items = items.OrderByDescending(x => x.Priority).ToList();
-        }
 
         public async Task<IActionResult> OnGet()
         {
-            await GetItems();
+            Items = await _service.GetItems();
             return Page();
         }
 
@@ -65,23 +55,25 @@ namespace WebClientR.Pages
 
         public async Task<IActionResult> OnPostDeleteModal(TodoItemDTO todoItem)
         {
-            await _http.DeleteAsync($"https://127.0.0.1:7237/todoitems/{todoItem.Id}");
-            return await this.OnGet();
+            var response = await _service.DeleteItem(todoItem.Id);
+            if (response) return await OnGet();
+            return NotFound();
         }
 
         public async Task<IActionResult> OnPostEditModal(TodoItemDTO todoItem)
         {
+            bool response;
             switch (todoItem.Id)
             {
                 case < 1:
-                    await _http.PostAsJsonAsync($"https://127.0.0.1:7237/todoitems", todoItem);
-                    break;
+                    response = await _service.CreateItem(todoItem);
+                    if (response) return await OnGet();
+                    return NotFound();
                 case > 0:
-                    await _http.PutAsJsonAsync($"https://127.0.0.1:7237/todoitems/{todoItem.Id}", todoItem);
-                    break;
+                    response = await _service.EditItem(todoItem);
+                    if (response) return await OnGet();
+                    return NotFound();
             }
-
-            return await OnGet();
         }
     }
 }
