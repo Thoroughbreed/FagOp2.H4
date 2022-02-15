@@ -13,11 +13,12 @@ namespace WebAPI.DTO
         public TodoItemDTO()
         {
         }
+
         public enum PriorityEnum
         {
             Low,
             Normal,
             High
         }
-        }
+    }
 }

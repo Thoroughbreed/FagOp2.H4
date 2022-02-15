@@ -16,6 +16,6 @@ namespace WebAPI.DTO
         }
 
         public TodoItemDTO(Todo todoItem) =>
-            (Id, Description, Completed, Priority, CreatedTime) = (todoItem.Id, todoItem.Description, todoItem.Completed, todoItem.Priority, DateTime.Now);
+            (Id, Description, Completed, Priority, CreatedTime) = (todoItem.Id, todoItem.Description, todoItem.Completed, todoItem.Priority, todoItem.CreatedTime);
     }
 }
