@@ -11,6 +11,8 @@ Razor frontend and security
   <summary>Table of Contents</summary>
   <ol>
     <li>
+      <a href=#what-is-this">What is this?</a></li>
+    <li>
       <a href="#requirements">Requirements</a></li>
     <li>
       <a href="#nuget-packs">NuGet packs</a></li>
@@ -24,6 +26,10 @@ Razor frontend and security
       <a href="#contact">Contact</a></li>
   </ol>
 </details>
+
+### What is this
+This is the web frontend for the API created in this project. It is a fairly straightforward Razor web server contacting the API via HTTP, giving the user a nice overview and CRUD capabilities to the to-do list. 
+The site is made purely with education in mind, and should not be used as a proper to-do list without tweaks and hotfixes.
 
 ### Requirements
 A web-frontend with anonymous access
