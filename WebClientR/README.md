@@ -62,6 +62,8 @@ A web-frontend with anonymous access
 |---------|--------|
 | 0.1.0   | First release, smoke test |
 | 0.2.0   | Changed to use DI service |
+| 0.2.1   | Added data validation to add/edit |
+| 0.2.2   | Removed data validation because of issues with the modal behaviour |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### License
