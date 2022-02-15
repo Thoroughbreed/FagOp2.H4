@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
-using WebAPI.DTO;
+using WebClientR.DTO;
 
 namespace WebClientR.Pages
 {
@@ -14,14 +16,16 @@ namespace WebClientR.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private HttpClient _http;
-        
-        [BindProperty(SupportsGet = true)]
-        public List<TodoItemDTO> Items { get; set; }
+
+        [BindProperty(SupportsGet = true)] public List<TodoItemDTO> Items { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
-            HttpClientHandler clientHandler = new ();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClientHandler clientHandler = new();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
             _logger = logger;
             _http = new HttpClient(clientHandler);
         }
@@ -29,13 +33,55 @@ namespace WebClientR.Pages
         private async Task GetItems()
         {
             Items = new();
-            Items = await _http.GetFromJsonAsync<List<TodoItemDTO>>($"https://127.0.0.1:7237/todoitems");
+            var items = await _http.GetFromJsonAsync<List<TodoItemDTO>>($"https://127.0.0.1:7237/todoitems");
+            Items = items.OrderByDescending(x => x.Priority).ToList();
         }
 
-        public async  Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet()
         {
             await GetItems();
             return Page();
+        }
+
+        public PartialViewResult OnGetDeleteModal(int id, string desc, TodoItemDTO.PriorityEnum prio)
+        {
+            return new PartialViewResult
+            {
+                ViewName = "_DeleteModal",
+                ViewData = new ViewDataDictionary<TodoItemDTO>(ViewData,
+                    new TodoItemDTO { Id = id, Description = desc, Priority = prio })
+            };
+        }
+
+        public PartialViewResult OnGetEditModal(int id, string desc, TodoItemDTO.PriorityEnum prio)
+        {
+            return new PartialViewResult
+            {
+                ViewName = "_EditModal",
+                ViewData = new ViewDataDictionary<TodoItemDTO>(ViewData,
+                    new TodoItemDTO { Id = id, Description = desc, Priority = prio })
+            };
+        }
+
+        public async Task<IActionResult> OnPostDeleteModal(TodoItemDTO todoItem)
+        {
+            await _http.DeleteAsync($"https://127.0.0.1:7237/todoitems/{todoItem.Id}");
+            return await this.OnGet();
+        }
+
+        public async Task<IActionResult> OnPostEditModal(TodoItemDTO todoItem)
+        {
+            switch (todoItem.Id)
+            {
+                case < 1:
+                    await _http.PostAsJsonAsync($"https://127.0.0.1:7237/todoitems", todoItem);
+                    break;
+                case > 0:
+                    await _http.PutAsJsonAsync($"https://127.0.0.1:7237/todoitems/{todoItem.Id}", todoItem);
+                    break;
+            }
+
+            return await OnGet();
         }
     }
 }

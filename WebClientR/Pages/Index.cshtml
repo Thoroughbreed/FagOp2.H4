@@ -19,17 +19,31 @@
                         <p class="card-text">@item.Priority</p>
                     </div>
                     <div class="card-footer text-muted">
-                        <a class="btn btn-info" asp-page="./detail" asp-route-ID="@item.Id">
-                            Rediger
-                            <i class="fas fa-info-circle"></i>
-                        </a>
-                        <a class="btn btn-danger" asp-page-handler="Delete" asp-page="./" asp-route-ID="@item.Id">
-                            Slet
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-url="@Url.Page("Index", "EditModal", new { id = item.Id, prio = item.Priority, desc = item.Description })">
+                            Edit
+                            <i class="fas fa-circle-info"></i>
+                        </button>
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-toggle="modal"
+                                data-url="@Url.Page("Index", "DeleteModal", new { id = item.Id, prio = item.Priority, desc = item.Description })">
+                            Delete
                             <i class="fas fa-circle-trash"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
         }
     </div>
+    <button type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-url="@Url.Page("Index", "EditModal", new { })">
+        Add new
+        <i class="fas fa-circle-info"></i>
+    </button>
+    <div id="modal-placeholder"/>
 </div>

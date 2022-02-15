@@ -1,0 +1,38 @@
+@using WebClientR.DTO
+@model WebClientR.DTO.TodoItemDTO
+<!-- Delete Modal (Partial view) -->
+<div class="modal fade" id="add-contact" tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addContactLabel">Edit item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="EditModal">
+                    <input name="id" type="hidden" asp-for="Id"/>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input asp-for="Description" class="form-control"/>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Priority"></label>
+                        <select asp-for="Priority" asp-items="Html.GetEnumSelectList<TodoItemDTO.PriorityEnum>()"></select>
+                        <span asp-validation-for="Priority" class="text-danger"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Completed" type="checkbox" class="form-check-input"/>
+                        <label asp-for="Completed" class="form-check-label"></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abort</button>
+                <button type="button" class="btn btn-danger" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

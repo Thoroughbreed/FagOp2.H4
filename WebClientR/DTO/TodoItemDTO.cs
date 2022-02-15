@@ -1,6 +1,6 @@
 using System;
 
-namespace WebAPI.DTO
+namespace WebClientR.DTO
 {
     public class TodoItemDTO
     {
