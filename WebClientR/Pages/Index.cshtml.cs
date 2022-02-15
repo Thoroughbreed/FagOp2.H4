@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -52,13 +53,19 @@ namespace WebClientR.Pages
         public async Task<IActionResult> OnPostDeleteModal(TodoItemDTO todoItem)
         {
             var response = await _service.DeleteItem(todoItem.Id);
-            if (response) return await OnGet();
+            if (response) return RedirectToPage("Index");
             return NotFound();
         }
 
         public async Task<IActionResult> OnPostEditModal(TodoItemDTO todoItem)
         {
             bool response;
+            if (!ModelState.IsValid)
+                return new PartialViewResult
+                {
+                    ViewName = "_EditModal",
+                    ViewData = new ViewDataDictionary<TodoItemDTO>(ViewData, todoItem)
+                };
             switch (todoItem.Id)
             {
                 case < 1:
@@ -67,7 +74,7 @@ namespace WebClientR.Pages
                     return NotFound();
                 case > 0:
                     response = await _service.EditItem(todoItem);
-                    if (response) return await OnGet();
+                    if (response) return Page();
                     return NotFound();
             }
         }

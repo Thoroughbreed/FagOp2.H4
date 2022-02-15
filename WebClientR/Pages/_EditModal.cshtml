@@ -12,6 +12,7 @@
             </div>
             <div class="modal-body">
                 <form asp-page-handler="EditModal">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <input name="id" type="hidden" asp-for="Id"/>
                     <div class="form-group">
                         <label asp-for="Description"></label>
