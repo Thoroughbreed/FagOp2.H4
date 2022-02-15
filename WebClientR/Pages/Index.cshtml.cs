@@ -9,23 +9,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using WebClientR.DTO;
+using WebClientR.Services;
 
 namespace WebClientR.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly ITodoService _service;
         private HttpClient _http;
 
         [BindProperty(SupportsGet = true)] public List<TodoItemDTO> Items { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, ITodoService service)
         {
+            _service = service;
             HttpClientHandler clientHandler = new();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) =>
-            {
-                return true;
-            };
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
             _logger = logger;
             _http = new HttpClient(clientHandler);
         }
