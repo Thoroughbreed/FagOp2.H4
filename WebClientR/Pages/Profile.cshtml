@@ -8,7 +8,7 @@
 
 <div class="text-center">
     <h1 class="display-4">@User.Identity.Name</h1>
-    <h3 class="display-4">@User.Claims.FirstOrDefault(t => t.Type == ClaimTypes.Email)?.Value</h3>
+    <p class="display-2">@User.Claims.FirstOrDefault(t => t.Type == ClaimTypes.Email)?.Value</p>
     <img src="@User.Claims.FirstOrDefault(t => t.Type == "picture")?.Value" />
     
 </div>
