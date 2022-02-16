@@ -7,43 +7,5 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>@Model.Items.Count() items in the list</p>
-    <div class="card-deck row">
-        @foreach (var item in Model.Items)
-        {
-            <div class="col-sm-3">
-                <div class="card my-3 ">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Description</h5>
-                        <p class="card-text">@item.CreatedTime.ToString(CultureInfo.CurrentCulture)</p>
-                        <p class="card-text">@item.Priority</p>
-                    </div>
-                    <div class="card-footer text-muted">
-                        <button type="button"
-                                class="btn btn-primary"
-                                data-toggle="modal"
-                                data-url="@Url.Page("Index", "EditModal", new { id = item.Id, prio = item.Priority, desc = item.Description })">
-                            Edit
-                            <i class="fas fa-circle-info"></i>
-                        </button>
-                        <button type="button"
-                                class="btn btn-danger"
-                                data-toggle="modal"
-                                data-url="@Url.Page("Index", "DeleteModal", new { id = item.Id, prio = item.Priority, desc = item.Description })">
-                            Delete
-                            <i class="fas fa-circle-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <button type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-url="@Url.Page("Index", "EditModal", new { })">
-        Add new
-        <i class="fas fa-circle-info"></i>
-    </button>
-    <div id="modal-placeholder"/>
+    
 </div>

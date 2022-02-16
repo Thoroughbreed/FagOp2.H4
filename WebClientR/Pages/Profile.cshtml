@@ -1,0 +1,14 @@
+@page
+@{
+    ViewData["Title"] = "Profile page";
+}
+@using System.Security.Claims
+@model WebClientR.Pages.Profile
+
+
+<div class="text-center">
+    <h1 class="display-4">@User.Identity.Name</h1>
+    <h3 class="display-4">@User.Claims.FirstOrDefault(t => t.Type == ClaimTypes.Email)?.Value</h3>
+    <img src="@User.Claims.FirstOrDefault(t => t.Type == "picture")?.Value" />
+    
+</div>
