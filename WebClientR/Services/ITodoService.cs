@@ -10,6 +10,7 @@ namespace WebClientR.Services
         public Task<bool>  CreateItem(TodoItemDTO todoItem);
         public Task<bool>  EditItem(TodoItemDTO todoItem);
         public Task<bool> DeleteItem(int id);
+        public Task InitializeHttpClient();
 
     }
 }

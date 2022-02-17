@@ -43,8 +43,9 @@ $(function () {
     //     });        
     // });
     //
-    // placeholderElement.on('click', '[data-dismiss="modal"]', function (event) {
-    //     event.preventDefault();
-    //     placeholderElement.find('.modal').modal('hide');
-    // });
+    
+    placeholderElement.on('click', '[data-dismiss="modal"]', function (event) {
+        event.preventDefault();
+        placeholderElement.find('.modal').modal('hide');
+    });
 });
