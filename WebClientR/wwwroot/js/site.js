@@ -58,9 +58,14 @@ $('#editModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var itemID = button.data('id') 
     var itemPrio = button.data('prio') 
-    var itemDesc = button.data('desc') 
- 
+    var itemDesc = button.data('desc')
+
     var modal = $(this)
+    
+    // if (itemPrio == "Low") itemPrio = 0
+    // if (itemPrio == "Normal") itemPrio = 1
+    // if (itemPrio == "High") itemPrio = 2
+    
     // modal.find('.modal-title').text(itemID + " " + itemPrio + " " + itemDesc)
     modal.find('.item-id').val(itemID)
     modal.find('.item-description').val(itemDesc)
@@ -70,12 +75,9 @@ $('#editModal').on('show.bs.modal', function (event) {
 $('#deleteModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var itemID = button.data('id')
-    var itemPrio = button.data('prio')
     var itemDesc = button.data('desc')
-
     var modal = $(this)
     // modal.find('.modal-title').text(itemID + " " + itemPrio + " " + itemDesc)
     modal.find('.item-id').val(itemID)
     modal.find('.item-description').val(itemDesc)
-    modal.find('.item-priority').val(itemPrio)
 })

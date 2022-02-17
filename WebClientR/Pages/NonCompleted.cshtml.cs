@@ -38,24 +38,20 @@ namespace WebClientR.Pages
             return NotFound();
         }
 
-        public async Task<IActionResult> OnPostEditModal()
+        public async Task<IActionResult> OnPostEditModal(TodoItemDTO todoItem)
         {
             bool response;
             if (!ModelState.IsValid)
-                return new PartialViewResult
-                {
-                    ViewName = "_EditModal",
-                    ViewData = new ViewDataDictionary<TodoItemDTO>(ViewData, TodoItem)
-                };
+                return Page();
             switch (TodoItem.Id)
             {
                 case < 1:
-                    response = await _service.CreateItem(TodoItem);
+                    response = await _service.CreateItem(todoItem);
                     if (response) return await OnGet();
                     return NotFound();
                 case > 0:
-                    response = await _service.EditItem(TodoItem);
-                    if (response) return Page();
+                    response = await _service.EditItem(todoItem);
+                    if (response) return await OnGet();
                     return NotFound();
             }
         }
