@@ -1,6 +1,7 @@
 @page
 @model NonCompleted
 @using System.Globalization
+@using WebClientR.DTO
 @{
     ViewData["Title"] = "To-do list";
 }
@@ -21,15 +22,21 @@
                     <div class="card-footer text-muted">
                         <button type="button"
                                 class="btn btn-primary"
-                                data-toggle="modal"
-                                data-url="@Url.Page("NonCompleted", "EditModal", new { id = item.Id, prio = item.Priority, desc = item.Description })">
+                                data-bs-toggle="modal"
+                                data-bs-target="#editModal"
+                                data-id="@item.Id"
+                                data-prio="@item.Priority"
+                                data-desc="@item.Description">
                             Edit
                             <i class="fas fa-circle-info"></i>
                         </button>
                         <button type="button"
                                 class="btn btn-danger"
-                                data-toggle="modal"
-                                data-url="@Url.Page("NonCompleted", "DeleteModal", new { id = item.Id, prio = item.Priority, desc = item.Description })">
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteModal"
+                                data-id="@item.Id"
+                                data-prio="@item.Priority"
+                                data-desc="@item.Description">
                             Delete
                             <i class="fas fa-circle-trash"></i>
                         </button>
@@ -40,10 +47,86 @@
     </div>
     <button type="button"
             class="btn btn-primary"
-            data-toggle="modal"
-            data-url="@Url.Page("NonCompleted", "EditModal", new { })">
+            data-bs-toggle="modal"
+            data-bs-target="#editModal"
+            data-id=""
+            data-prio="Select priority"
+            data-desc="Enter description here">
         Add new
         <i class="fas fa-circle-info"></i>
     </button>
-    <div id="modal-placeholder"></div>
+
+
+    <!-- MODAL EDIT/CREATE -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form asp-page-handler="EditModal" method="post">
+                    <div class="modal-body">
+                        <input class="item-id" name="id" type="hidden" asp-for="@Model.TodoItem.Id"/>
+                        <div class="form-group">
+                            <label asp-for="@Model.TodoItem.Description"></label>
+                            <input asp-for="@Model.TodoItem.Description" class="form-control item-description"/>
+                            <span asp-validation-for="@Model.TodoItem.Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.TodoItem.Priority"></label>
+                            <select asp-for="@Model.TodoItem.Priority" asp-items="Html.GetEnumSelectList<TodoItemDTO.PriorityEnum>()">
+                                <option class="item-priority"></option>
+                            </select>
+                            <span asp-validation-for="@Model.TodoItem.Priority" class="text-danger"></span>
+                        </div>
+                        <div class="form-check">
+                            <input asp-for="@Model.TodoItem.Completed" type="checkbox" class="form-check-input"/>
+                            <label asp-for="@Model.TodoItem.Completed" class="form-check-label"></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DELETE -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactLabel">Delete item?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-bs-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form asp-page-handler="DeleteModal" method="post">
+                    <div class="modal-body">
+                        <input class="item-id" name="id" type="hidden" asp-for="@Model.TodoItem.Id"/>
+                        <div class="form-group">
+                            <label asp-for="@Model.TodoItem.Description"></label>
+                            <input asp-for="@Model.TodoItem.Description" class="form-control item-description" disabled/>
+                            <span asp-validation-for="@Model.TodoItem.Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.TodoItem.Priority"></label>
+                            <input asp-for="@Model.TodoItem.Priority" class="form-control"/>
+                            <span asp-validation-for="@Model.TodoItem.Priority" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
