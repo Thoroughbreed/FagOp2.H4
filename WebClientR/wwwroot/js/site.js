@@ -76,8 +76,8 @@ $('#deleteModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var itemID = button.data('id')
     var itemDesc = button.data('desc')
+    
     var modal = $(this)
-    // modal.find('.modal-title').text(itemID + " " + itemPrio + " " + itemDesc)
     modal.find('.item-id').val(itemID)
     modal.find('.item-description').val(itemDesc)
 })
