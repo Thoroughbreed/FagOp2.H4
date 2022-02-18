@@ -42,8 +42,9 @@ A web-frontend with anonymous access
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### NuGet packs
-| Name                      | Version | Where  |
-|---------------------------|---------|--------|
+| Name                            | Version | Where        |
+|---------------------------------|---------|--------------|
+| Auth0.AspNetCore.Authentication | 1.0.1   | Web frontend |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Completed tests
@@ -55,6 +56,7 @@ A web-frontend with anonymous access
 | Show all items            | Not run   |
 | Show non-completed items  | Succeeded |
 | Find item by ID           | Succeeded |
+| Check security/perms      | Succeeded |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Changelog
@@ -64,6 +66,12 @@ A web-frontend with anonymous access
 | 0.2.0   | Changed to use DI service |
 | 0.2.1   | Added data validation to add/edit |
 | 0.2.2   | Removed data validation because of issues with the modal behaviour |
+| 0.3.0   | Completely remade the data validation process |
+| 0.3.1   | Small validation fixes |
+| 0.3.2   | Changed the validation modal |
+| 0.4.0   | Added permission check |
+| 0.4.1   | Remade the UI/UX regarding permissions |
+| 0.5.0   | Switched from AccessToken permissions to IdToken role based authentication |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### License
@@ -82,7 +90,7 @@ Project Link: [https://github.com/jaa2019/FagOp2.H4/tree/Razor/WebClientR](https
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [build-shield]: https://img.shields.io/badge/Build-succeeded-brightgreen.svg
-[test-shield]: https://img.shields.io/badge/Tests-5%20passing%2C%201%20skipped-yellow.svg
+[test-shield]: https://img.shields.io/badge/Tests-6%20passing%2C%201%20skipped-yellow.svg
 [contributors-shield]: https://img.shields.io/github/contributors/jaa2019/FagOp2.H4.svg?style=badge
 [contributors-url]: https://github.com/jaa2019/FagOp2.H4/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/jaa2019/FagOp2.H4.svg?style=badge
