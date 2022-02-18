@@ -40,20 +40,21 @@ A to-do list with the following:
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### API Endpoints
-| Endpoint                   | Description                   | Request body | Response body        |
-|----------------------------|-------------------------------|--------------|----------------------|
-| GET /                      | Browser test, "Hello World"   | None         | Hello World!         |
-| GET /todoitems             | Get non-completed to-do items | None         | Array of to-do items |
-| GET /todoitems/complete    | Get all to-do items           | None         | Array of to-do items |
-| GET /todoitems/{id}        | Get an item by ID             | None         | To-do item           |
-| POST /todoitems            | Add a new item                | To-do item   | To-do item           |
-| PUT /todoitems/{id}        | Update an item by ID          | To-do item   | None                 |
-| DELETE /todoitems/{id}     | Delete an item by ID          | None         | None                 |
+| Endpoint                   | Description                   | Request body | Response body        | Permission level |
+|----------------------------|-------------------------------|--------------|----------------------|------------------|
+| GET /                      | Browser test, "Hello World"   | None         | Hello World!         | None             |
+| GET /todoitems             | Get non-completed to-do items | None         | Array of to-do items | User:read        |
+| GET /todoitems/complete    | Get all to-do items           | None         | Array of to-do items | User:read        |
+| GET /todoitems/{id}        | Get an item by ID             | None         | To-do item           | User:read        |
+| POST /todoitems            | Add a new item                | To-do item   | To-do item           | User:write       |
+| PUT /todoitems/{id}        | Update an item by ID          | To-do item   | None                 | User:write       |
+| DELETE /todoitems/{id}     | Delete an item by ID          | None         | None                 | User:admin       |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### NuGet packs
 | Name                      | Version | Where  |
 |---------------------------|---------|--------|
+| Authentication JwtBearer  | 6.0.2   | WebAPI |
 | Entity Framework Core     | 6.0.2   | WebAPI |
 | Entity Framework InMemory | 6.0.2   | WebAPI |
 | Swashbuckle               | 6.2.3   | WebAPI |
@@ -68,6 +69,8 @@ A to-do list with the following:
 | Show all items            | Succeeded |
 | Show non-completed items  | Succeeded |
 | Find item by ID           | Succeeded |
+| Check authentication      | Succeeded |
+| Check permissions         | Succeeded |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Changelog
@@ -75,6 +78,8 @@ A to-do list with the following:
 |---------|--------|
 | 0.1.0   | First release, smoke test |
 | 0.1.1   | Changed to use DTO instead of direct |
+| 0.2.0   | Added authentication via Auth0 |
+| 0.2.1   | Added permissions via Auth0 |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### License
