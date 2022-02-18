@@ -8,7 +8,9 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>@Model.Items.Count() items in the list</p>
+    @if (Model.CanRead)
+    {
+        <p>@Model.Items.Count() items in the list</p>
     <div class="card-deck row">
         @foreach (var item in Model.Items)
         {
@@ -20,41 +22,50 @@
                         <p class="card-text">@item.Priority</p>
                     </div>
                     <div class="card-footer text-muted">
-                        <button type="button"
-                                class="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editModal"
-                                data-id="@item.Id"
-                                data-prio="@item.Priority"
-                                data-desc="@item.Description">
-                            Edit
-                            <i class="fas fa-circle-info"></i>
-                        </button>
-                        <button type="button"
-                                class="btn btn-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteModal"
-                                data-id="@item.Id"
-                                data-prio="@item.Priority"
-                                data-desc="@item.Description">
-                            Delete
-                            <i class="fas fa-circle-trash"></i>
-                        </button>
+                        @if (Model.CanWrite)
+                        {
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editModal"
+                                    data-id="@item.Id"
+                                    data-prio="@item.Priority"
+                                    data-desc="@item.Description">
+                                Edit
+                                <i class="fas fa-circle-info"></i>
+                            </button>
+                        }
+                        @if (Model.CanDelete)
+                        {
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    data-id="@item.Id"
+                                    data-prio="@item.Priority"
+                                    data-desc="@item.Description">
+                                Delete
+                                <i class="fas fa-circle-trash"></i>
+                            </button>
+                        }
                     </div>
                 </div>
             </div>
         }
     </div>
-    <button type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#editModal"
-            data-id=""
-            data-prio="Select priority"
-            data-desc="Enter description here">
-        Add new
-        <i class="fas fa-circle-info"></i>
-    </button>
+    @if (Model.CanWrite)
+    {
+        <button type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editModal"
+                data-id=""
+                data-prio="Select priority"
+                data-desc="Enter description here">
+            Add new
+            <i class="fas fa-circle-info"></i>
+        </button>
+    }
 
 
     <!-- MODAL EDIT/CREATE -->
@@ -122,5 +133,9 @@
             </div>
         </div>
     </div>
-
+    }
+    else
+    {
+        <p>You are not authorized to view this list. Please contact an administrator or superuser to gain permission.</p>  
+    }
 </div>

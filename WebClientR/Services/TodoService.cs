@@ -50,10 +50,11 @@ namespace WebClientR.Services
             return responseMessage.IsSuccessStatusCode;
         }
 
-        public async Task InitializeHttpClient()
+        public async Task<string> InitializeHttpClient()
         {
             var BearerToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", BearerToken);
+            return BearerToken;
         }
     }
 }
