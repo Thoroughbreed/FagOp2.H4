@@ -1,10 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace WebClientR.DTO
 {
     public class TodoItemDTO
     {
+        [ValidateNever]
         public int Id { get; set; }
         [Required]
         public string? Description { get; set; }
